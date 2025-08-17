@@ -1,30 +1,124 @@
-body {
-‎    font-family: Arial, sans-serif;
-‎    background: #f8f9fa;
-‎    margin: 0;
-‎    padding: 0;
-‎    text-align: center;
+‎/* General */
+‎* {
+‎  margin: 0;
+‎  padding: 0;
+‎  box-sizing: border-box;
+‎  font-family: "Noto Sans Bengali", Arial, sans-serif;
 ‎}
-‎header {
-‎    background: #007bff;
-‎    color: white;
-‎    padding: 20px;
+‎body {
+‎  background: #f9f9f9;
+‎  color: #333;
+‎  line-height: 1.6;
 ‎}
-‎main {
-‎    padding: 20px;
+‎
+‎/* Navbar */
+‎.navbar {
+‎  display: flex;
+‎  justify-content: space-between;
+‎  align-items: center;
+‎  padding: 15px 10%;
+‎  background: #111;
+‎  color: #fff;
+‎  position: sticky;
+‎  top: 0;
 ‎}
-‎.ads {
-‎    background: white;
-‎    padding: 15px;
-‎    border-radius: 10px;
-‎    margin: 20px auto;
-‎    max-width: 600px;
-‎    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+‎.navbar .logo {
+‎  font-size: 22px;
+‎  font-weight: bold;
 ‎}
+‎.navbar nav a {
+‎  margin: 0 12px;
+‎  text-decoration: none;
+‎  color: #fff;
+‎  transition: color 0.3s;
+‎}
+‎.navbar nav a:hover {
+‎  color: #ff9800;
+‎}
+‎
+‎/* Hero */
+‎.hero {
+‎  height: 90vh;
+‎  background: linear-gradient(to right, #673ab7, #3f51b5);
+‎  color: #fff;
+‎  display: flex;
+‎  flex-direction: column;
+‎  justify-content: center;
+‎  align-items: center;
+‎  text-align: center;
+‎  padding: 20px;
+‎}
+‎.hero h2 {
+‎  font-size: 38px;
+‎  margin-bottom: 15px;
+‎}
+‎.hero p {
+‎  font-size: 18px;
+‎  margin-bottom: 20px;
+‎}
+‎.btn {
+‎  display: inline-block;
+‎  padding: 10px 20px;
+‎  background: #ff9800;
+‎  color: #fff;
+‎  text-decoration: none;
+‎  border-radius: 8px;
+‎  transition: 0.3s;
+‎}
+‎.btn:hover {
+‎  background: #e68900;
+‎}
+‎
+‎/* Features */
+‎.features {
+‎  padding: 50px 10%;
+‎  background: #fff;
+‎  text-align: center;
+‎}
+‎.features h2 {
+‎  margin-bottom: 25px;
+‎}
+‎.grid {
+‎  display: grid;
+‎  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+‎  gap: 20px;
+‎}
+‎.card {
+‎  background: #fafafa;
+‎  padding: 20px;
+‎  border-radius: 12px;
+‎  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+‎  font-size: 18px;
+‎}
+‎
+‎/* About */
+‎.about {
+‎  padding: 50px 10%;
+‎  text-align: center;
+‎  background: #f1f1f1;
+‎}
+‎.about p {
+‎  max-width: 600px;
+‎  margin: auto;
+‎  font-size: 17px;
+‎}
+‎
+‎/* Contact */
+‎.contact {
+‎  padding: 50px 10%;
+‎  text-align: center;
+‎  background: #fff;
+‎}
+‎.contact p {
+‎  margin: 8px 0;
+‎}
+‎
+‎/* Footer */
 ‎footer {
-‎    margin-top: 20px;
-‎    padding: 10px;
-‎    background: #333;
-‎    color: white;
+‎  padding: 15px;
+‎  background: #111;
+‎  color: #fff;
+‎  text-align: center;
+‎  font-size: 14px;
 ‎}
 ‎
