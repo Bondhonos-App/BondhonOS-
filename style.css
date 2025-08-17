@@ -1,0 +1,30 @@
+body {
+‎    font-family: Arial, sans-serif;
+‎    background: #f8f9fa;
+‎    margin: 0;
+‎    padding: 0;
+‎    text-align: center;
+‎}
+‎header {
+‎    background: #007bff;
+‎    color: white;
+‎    padding: 20px;
+‎}
+‎main {
+‎    padding: 20px;
+‎}
+‎.ads {
+‎    background: white;
+‎    padding: 15px;
+‎    border-radius: 10px;
+‎    margin: 20px auto;
+‎    max-width: 600px;
+‎    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+‎}
+‎footer {
+‎    margin-top: 20px;
+‎    padding: 10px;
+‎    background: #333;
+‎    color: white;
+‎}
+‎
