@@ -1,0 +1,7 @@
+let userID = localStorage.getItem("userID") || generateID();
+localStorage.setItem("userID", userID);
+let referralLink = `https://bondhon-os.vercel.app/?ref=${userID}`;
+
+function generateID() {
+  return 'user-' + Math.random().toString(36).substr(2, 9);
+}
