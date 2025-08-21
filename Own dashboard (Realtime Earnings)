@@ -1,0 +1,4 @@
+// Firebase Realtime Database
+firebase.database().ref('earnings/').on('value', snapshot => {
+  document.getElementById('totalEarnings').innerText = snapshot.val();
+});
