@@ -1,0 +1,15 @@
+ bondhon-os/
+│
+├── index.html          ← হোমপেজ: Donation, Affiliate, Rewarded Tasks, Referral, Premium Unlock
+├── style.css           ← সব ডিজাইন
+├── script.js           ← Gamification, Referral, Live Earnings Logic
+├── assets/
+│    ├── logo.png
+│    └── banner.jpg
+├── ads/
+│    └── ads-config.js   ← AdSense / Affiliate / Push Notification Integration
+├── premium/
+│    └── unlock.html     ← Premium / Secret Content
+├── dashboard.html       ← Owner Dashboard (Realtime Earnings)
+├── firebase-config.js   ← Firebase / Supabase setup
+└── README.md            ← Deploy & Setup Instructions
