@@ -1,0 +1,7 @@
+<button onclick="unlockPremium()">Unlock Premium Features</button>
+<script>
+function unlockPremium(){
+   let paymentConfirmed = confirm("Payment received? (simulate)");
+   if(paymentConfirmed) window.location.href='premium/unlock.html';
+}
+</script>
