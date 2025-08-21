@@ -1,0 +1,6 @@
+function completeTask(taskID){
+   // Example: Watch Video or Share Link
+   let points = 10; // ১টি task points
+   savePointsToFirebase(userID, points);
+   alert(`Task Complete! You earned ${points} points.`);
+}
