@@ -21,6 +21,7 @@
       <a href="#vision">ভিশন</a>
       <a href="#about">আমাদের সম্পর্কে</a>
       <a href="#contact">যোগাযোগ</a>
+      <a href="#auth">লগইন / রেজিস্টার</a>
     </nav>
   </header>
 
@@ -76,11 +77,26 @@
     <p>🌐 ওয়েব: https://bondhonos.vercel.app</p>
   </section>
 
-  <!-- Signup Section -->
-  <section class="signup">
-    <h2>সাইন আপ করুন</h2>
-    <input type="email" id="email" placeholder="আপনার ইমেইল লিখুন">
-    <button onclick="signup()">সাইন আপ</button>
+  <!-- Auth Section -->
+  <section id="auth" class="auth">
+    <h2>🔑 লগইন / রেজিস্টার</h2>
+
+    <div id="auth-section">
+      <h3>Register</h3>
+      <input type="email" id="registerEmail" placeholder="Email">
+      <input type="password" id="registerPassword" placeholder="Password">
+      <button onclick="register()">Sign Up</button>
+
+      <h3>Login</h3>
+      <input type="email" id="loginEmail" placeholder="Email">
+      <input type="password" id="loginPassword" placeholder="Password">
+      <button onclick="login()">Login</button>
+    </div>
+
+    <div id="user-section" style="display:none;">
+      <h3>Welcome, <span id="userEmail"></span></h3>
+      <button onclick="logout()">Logout</button>
+    </div>
   </section>
 
   <!-- Footer -->
@@ -88,7 +104,74 @@
     <p>© 2025 BondhonOS™ | তৈরি করেছে Zihad Islam</p>
   </footer>
 
-  <script src="firebase.js"></script>
-  <script src="script.js"></script>
+  <!-- Firebase Auth Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+    import { 
+      getAuth, 
+      createUserWithEmailAndPassword, 
+      signInWithEmailAndPassword, 
+      signOut,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+
+    // TODO: এখানে তোমার Firebase Config বসাও
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Register
+    window.register = function() {
+      const email = document.getElementById("registerEmail").value;
+      const password = document.getElementById("registerPassword").value;
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(userCredential => {
+          alert("Registration successful!");
+        })
+        .catch(error => {
+          alert(error.message);
+        });
+    }
+
+    // Login
+    window.login = function() {
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+      signInWithEmailAndPassword(auth, email, password)
+        .then(userCredential => {
+          alert("Login successful!");
+        })
+        .catch(error => {
+          alert(error.message);
+        });
+    }
+
+    // Logout
+    window.logout = function() {
+      signOut(auth).then(() => {
+        alert("Logged out!");
+      });
+    }
+
+    // Auth State Change
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        document.getElementById("auth-section").style.display = "none";
+        document.getElementById("user-section").style.display = "block";
+        document.getElementById("userEmail").innerText = user.email;
+      } else {
+        document.getElementById("auth-section").style.display = "block";
+        document.getElementById("user-section").style.display = "none";
+      }
+    });
+  </script>
 </body>
 </html>
