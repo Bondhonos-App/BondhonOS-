@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard — BondhonOS™</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-800">
+  <header class="bg-white border-b">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="index.html" class="font-extrabold text-xl">BondhonOS™</a>
+      <div class="flex items-center gap-3">
+        <span id="userEmail" class="text-sm text-slate-600"></span>
+        <button id="logoutBtn" class="rounded-xl px-4 py-2 border hover:bg-slate-100">লগআউট</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-10">
+    <h1 class="text-2xl font-bold">স্বাগতম, <span id="displayName">User</span> 👋</h1>
+    <p class="mt-1 text-slate-600">এটাই তোমার ড্যাশবোর্ড। এখানে ফিচার/মডিউল যোগ হবে।</p>
+
+    <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="rounded-2xl border bg-white shadow p-5">
+        <h3 class="font-semibold">প্রোফাইল</h3>
+        <p class="text-sm text-slate-600 mt-2">নাম: <span id="nameVal">—</span></p>
+        <p class="text-sm text-slate-600">ইমেইল: <span id="emailVal">—</span></p>
+      </div>
+      <div class="rounded-2xl border bg-white shadow p-5">
+        <h3 class="font-semibold">স্ট্যাটাস</h3>
+        <p class="text-sm text-slate-600 mt-2">অ্যাকাউন্ট অ্যাক্টিভ ✅</p>
+      </div>
+      <div class="rounded-2xl border bg-white shadow p-5">
+        <h3 class="font-semibold">শুরু করুন</h3>
+        <p class="text-sm text-slate-600 mt-2">আগামীতে এখানে মডিউল/ফিচার যুক্ত হবে।</p>
+      </div>
+    </div>
+  </main>
+
+  <script type="module">
+    import { auth, db } from "./firebase-config.js";
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+    import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+
+    const logoutBtn = document.getElementById("logoutBtn");
+    const userEmail = document.getElementById("userEmail");
+    const nameVal = document.getElementById("nameVal");
+    const emailVal = document.getElementById("emailVal");
+    const displayName = document.getElementById("displayName");
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        // Not logged in → redirect to login
+        window.location.href = "login.html";
+        return;
+      }
+
+      userEmail.textContent = user.email || "";
+      emailVal.textContent = user.email || "";
+      displayName.textContent = user.displayName || "User";
+
+      try {
+        const snap = await getDoc(doc(db, "users", user.uid));
+        if (snap.exists()) {
+          const data = snap.data();
+          nameVal.textContent = data?.name || user.displayName || "—";
+        } else {
+          nameVal.textContent = user.displayName || "—";
+        }
+      } catch (e) {
+        nameVal.textContent = user.displayName || "—";
+      }
+    });
+
+    logoutBtn.addEventListener("click", async () => {
+      await signOut(auth);
+      window.location.href = "login.html";
+    });
+  </script>
+</body>
+</html>
