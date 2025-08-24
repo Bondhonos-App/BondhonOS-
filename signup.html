@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up — BondhonOS™</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-800">
+  <main class="min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md rounded-2xl bg-white border shadow p-6">
+      <a href="index.html" class="text-sm text-slate-600 hover:underline">← হোমে ফিরুন</a>
+      <h1 class="text-2xl font-bold mt-2">অ্যাকাউন্ট তৈরি করুন</h1>
+      <p class="text-slate-600 text-sm mt-1">ইমেইল/পাসওয়ার্ড বা Google দিয়ে শুরু করুন</p>
+
+      <form id="signupForm" class="mt-6 space-y-4">
+        <div>
+          <label class="block text-sm mb-1">নাম</label>
+          <input id="name" type="text" required class="w-full rounded-xl border px-3 py-2 outline-none">
+        </div>
+        <div>
+          <label class="block text-sm mb-1">ইমেইল</label>
+          <input id="email" type="email" required class="w-full rounded-xl border px-3 py-2 outline-none">
+        </div>
+        <div>
+          <label class="block text-sm mb-1">পাসওয়ার্ড (≥ ৬ অক্ষর)</label>
+          <input id="password" type="password" minlength="6" required class="w-full rounded-xl border px-3 py-2 outline-none">
+        </div>
+        <button class="w-full rounded-xl bg-slate-900 text-white py-2 hover:bg-black" type="submit">সাইন আপ</button>
+      </form>
+
+      <button id="googleBtn" class="mt-3 w-full rounded-xl border py-2 hover:bg-slate-100">Google দিয়ে সাইন আপ</button>
+
+      <p id="msg" class="mt-3 text-sm"></p>
+      <p class="mt-6 text-sm text-center">আগে থেকেই অ্যাকাউন্ট আছে? <a href="login.html" class="underline">লগইন</a></p>
+    </div>
+  </main>
+
+  <script type="module">
+    import { auth, provider, db } from "./firebase-config.js";
+    import { createUserWithEmailAndPassword, updateProfile, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+    import { doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+
+    const signupForm = document.getElementById("signupForm");
+    const msg = document.getElementById("msg");
+    const googleBtn = document.getElementById("googleBtn");
+
+    signupForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      msg.textContent = "";
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      try {
+        const cred = await createUserWithEmailAndPassword(auth, email, password);
+        await updateProfile(cred.user, { displayName: name });
+        await setDoc(doc(db, "users", cred.user.uid), {
+          uid: cred.user.uid,
+          name,
+          email,
+          createdAt: serverTimestamp()
+        });
+        window.location.href = "dashboard.html";
+      } catch (err) {
+        msg.textContent = "⚠️ " + (err?.message || "রেজিস্ট্রেশন ব্যর্থ হয়েছে");
+      }
+    });
+
+    googleBtn.addEventListener("click", async () => {
+      msg.textContent = "";
+      try {
+        const result = await signInWithPopup(auth, provider);
+        // নতুন হলে Firestore-এ প্রোফাইল বসাও
+        await setDoc(doc(db, "users", result.user.uid), {
+          uid: result.user.uid,
+          name: result.user.displayName || "",
+          email: result.user.email || "",
+          createdAt: serverTimestamp()
+        }, { merge: true });
+        window.location.href = "dashboard.html";
+      } catch (err) {
+        msg.textContent = "⚠️ " + (err?.message || "Google সাইন আপ ব্যর্থ");
+      }
+    });
+  </script>
+</body>
+</html>
