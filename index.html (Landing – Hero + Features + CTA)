@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BondhonOS™ — ভবিষ্যতের জন্য ডিজিটাল সিস্টেম</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-800">
+  <!-- Navbar -->
+  <header class="sticky top-0 z-50 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 border-b">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="/" class="font-extrabold text-xl">BondhonOS™</a>
+      <nav class="flex items-center gap-4 text-sm">
+        <a href="#features" class="hover:underline">ফিচার</a>
+        <a href="#about" class="hover:underline">আমাদের সম্পর্কে</a>
+        <a href="login.html" class="rounded-xl px-4 py-2 border hover:bg-slate-100">লগইন</a>
+        <a href="signup.html" class="rounded-xl px-4 py-2 bg-slate-900 text-white hover:bg-black">সাইন আপ</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="max-w-6xl mx-auto px-4 py-16 grid md:grid-cols-2 gap-8 items-center">
+    <div>
+      <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">ভবিষ্যতের জন্য <span class="text-slate-900">ডিজিটাল সিস্টেম</span></h1>
+      <p class="mt-4 text-slate-600">BondhonOS™ হলো উন্মুক্ত, নিরাপদ এবং আধুনিক একটি ওয়েব প্ল্যাটফর্ম—বাংলা + ইংরেজি সাপোর্টসহ।</p>
+      <div class="mt-6 flex gap-3">
+        <a href="signup.html" class="rounded-xl px-5 py-3 bg-slate-900 text-white hover:bg-black">সাইন আপ করুন</a>
+        <a href="#features" class="rounded-xl px-5 py-3 border hover:bg-slate-100">ফিচার দেখুন</a>
+      </div>
+    </div>
+    <div class="rounded-2xl border bg-white shadow p-6">
+      <img src="logo.png" alt="BondhonOS Logo" class="w-full object-contain" />
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="bg-white border-y">
+    <div class="max-w-6xl mx-auto px-4 py-14">
+      <h2 class="text-2xl font-bold">প্রধান ফিচার</h2>
+      <div class="mt-6 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="rounded-2xl border bg-slate-50 p-4">⚡ দ্রুত ও হালকা</div>
+        <div class="rounded-2xl border bg-slate-50 p-4">🔒 নিরাপদ ও সুরক্ষিত</div>
+        <div class="rounded-2xl border bg-slate-50 p-4">🌍 বাংলা + ইংরেজি</div>
+        <div class="rounded-2xl border bg-slate-50 p-4">💡 আধুনিক প্রযুক্তি</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="max-w-6xl mx-auto px-4 py-14">
+    <h2 class="text-2xl font-bold">আমাদের সম্পর্কে</h2>
+    <p class="mt-3 text-slate-600">BondhonOS™ — সকলের জন্য ফ্রি, ভবিষ্যত-প্রস্তুত একটি প্ল্যাটফর্ম। সহজে ব্যবহারযোগ্য, দ্রুত, এবং বিশ্বাসযোগ্য।</p>
+  </section>
+
+  <!-- CTA -->
+  <section class="max-w-6xl mx-auto px-4 pb-16">
+    <div class="rounded-2xl border bg-white shadow p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div>
+        <h3 class="text-xl font-semibold">অ্যাকাউন্ট তৈরি করে ড্যাশবোর্ড ব্যবহার করুন</h3>
+        <p class="text-slate-600">মিনিটের মধ্যে শুরু করুন — ইমেইল বা Google দিয়ে।</p>
+      </div>
+      <div class="flex gap-3">
+        <a href="login.html" class="rounded-xl px-4 py-2 border hover:bg-slate-100">লগইন</a>
+        <a href="signup.html" class="rounded-xl px-4 py-2 bg-slate-900 text-white hover:bg-black">সাইন আপ</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="border-t">
+    <div class="max-w-6xl mx-auto px-4 py-6 text-sm text-slate-600">
+      © 2025 BondhonOS™ — তৈরি করেছে Zihad Islam
+    </div>
+  </footer>
+</body>
+</html>
