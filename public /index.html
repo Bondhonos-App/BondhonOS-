@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BondhonOS</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.webmanifest" />
+</head>
+<body>
+  <div id="desktop">
+    <div class="taskbar">
+      <span class="logo">BondhonOS</span>
+    </div>
+    <div class="icons">
+      <div class="icon" onclick="openApp('notepad')">
+        <img src="icons/app-notepad.svg" alt="Notepad" />
+        <span>Notepad</span>
+      </div>
+      <div class="icon" onclick="openApp('browser')">
+        <img src="icons/app-browser.svg" alt="Browser" />
+        <span>Browser</span>
+      </div>
+      <div class="icon" onclick="openApp('code')">
+        <img src="icons/app-code.svg" alt="Code" />
+        <span>Code</span>
+      </div>
+      <div class="icon" onclick="openApp('files')">
+        <img src="icons/app-files.svg" alt="Files" />
+        <span>Files</span>
+      </div>
+      <div class="icon" onclick="openApp('settings')">
+        <img src="icons/app-settings.svg" alt="Settings" />
+        <span>Settings</span>
+      </div>
+    </div>
+    <div id="apps"></div>
+  </div>
+  <script src="desktop.js"></script>
+  <script src="firebase.js"></script>
+</body>
+</html>
