@@ -1,0 +1,15 @@
+name: "Done"
+description: "কাজ সম্পন্ন ✅"
+labels: ["done"]
+body:
+  - type: input
+    id: title
+    attributes:
+      label: "টাস্কের নাম"
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: "সারাংশ"
+      description: "এই কাজটি সম্পন্ন করতে কী করা হয়েছে তার সারসংক্ষেপ দিন"
