@@ -1,0 +1,13 @@
+.github/ISSUE_TEMPLATE/done.yml
+
+name: "🏁 Done Task"
+description: "যে কাজ সম্পন্ন হয়েছে"
+title: "[Done] "
+labels: ["Done"]
+body:
+  - type: textarea
+    attributes:
+      label: সম্পন্ন কাজের বিবরণ
+      description: কী কী শেষ হলো লিখুন
+      placeholder: যেমন — Firebase Auth সম্পন্ন
+
