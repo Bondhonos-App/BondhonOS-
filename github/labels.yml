@@ -1,0 +1,24 @@
+labels:
+  - name: "backlog"
+    color: "57606A"
+    description: "ভবিষ্যতের কাজ বা আইডিয়া"
+
+  - name: "todo"
+    color: "6E7781"
+    description: "অগ্রাধিকার দিয়ে শুরু করতে হবে"
+
+  - name: "in progress"
+    color: "D29922"
+    description: "কাজ চলছে"
+
+  - name: "review/testing"
+    color: "0969DA"
+    description: "কাজ শেষ হয়েছে, টেস্ট/রিভিউ বাকি"
+
+  - name: "blocked"
+    color: "CF222E"
+    description: "কোনো কারণে আটকে আছে (dependency/bug/approval)"
+
+  - name: "done"
+    color: "2DA44E"
+    description: "কাজ সম্পন্ন ✅"
