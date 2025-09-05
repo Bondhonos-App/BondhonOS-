@@ -1,14 +1,19 @@
-# === Issues / PR এর টাইটেল দেখে লেবেল বসানো ===
+# === Issues / PR টাইটেল দেখে লেবেল বসানো ===
 
 Backlog:
   - '.*Backlog.*'
+
 To Do:
   - '.*To Do.*'
+
 In Progress:
   - '.*In Progress.*'
+
 Review / Testing:
   - '.*Review.*'
+
 Blocked:
   - '.*Blocked.*'
+
 Done:
   - '.*Done.*'
