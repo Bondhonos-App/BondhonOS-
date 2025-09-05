@@ -1,0 +1,16 @@
+name: "Blocked"
+description: "কোনো কারণে আটকে আছে (dependency/bug/approval)"
+labels: ["blocked"]
+body:
+  - type: input
+    id: title
+    attributes:
+      label: "টাস্কের নাম"
+    validations:
+      required: true
+  - type: textarea
+    id: reason
+    attributes:
+      label: "কারণ"
+      description: "কেন এই কাজ আটকে আছে?"
+
