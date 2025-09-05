@@ -1,0 +1,15 @@
+name: "Review / Testing"
+description: "কাজ শেষ হয়েছে, টেস্ট/রিভিউ বাকি"
+labels: ["review/testing"]
+body:
+  - type: input
+    id: title
+    attributes:
+      label: "টাস্কের নাম"
+    validations:
+      required: true
+  - type: textarea
+    id: testplan
+    attributes:
+      label: "টেস্ট প্ল্যান"
+      description: "কি কি পরীক্ষা করতে হবে?"
