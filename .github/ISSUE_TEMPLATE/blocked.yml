@@ -1,0 +1,12 @@
+github/ISSUE_TEMPLATE/blocked.yml
+
+name: "⛔ Blocked Task"
+description: "যে কাজ আটকে গেছে"
+title: "[Blocked] "
+labels: ["Blocked"]
+body:
+  - type: textarea
+    attributes:
+      label: ব্লক হওয়ার কারণ
+      description: কী কারণে কাজ আটকে আছে লিখুন
+      placeholder: যেমন — API key মেলেনি / Approval বাকি
