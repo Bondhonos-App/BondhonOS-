@@ -1,0 +1,15 @@
+name: "In Progress"
+description: "কাজ চলছে; ডেভ/ডিজাইনিং চলছে"
+labels: ["in progress"]
+body:
+  - type: input
+    id: title
+    attributes:
+      label: "টাস্কের নাম"
+    validations:
+      required: true
+  - type: textarea
+    id: progress
+    attributes:
+      label: "বর্তমান অগ্রগতি"
+      description: "এখন পর্যন্ত কি কাজ হয়েছে?"
