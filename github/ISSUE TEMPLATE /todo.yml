@@ -1,0 +1,15 @@
+name: "To Do"
+description: "অগ্রাধিকার দিয়ে শুরু করতে হবে এমন টাস্ক"
+labels: ["todo"]
+body:
+  - type: input
+    id: title
+    attributes:
+      label: "টাস্কের নাম"
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: "বিস্তারিত"
+      description: "কেন এই কাজ প্রাধান্য পাবে?"
