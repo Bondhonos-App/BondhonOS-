@@ -1,0 +1,10 @@
+name: "📥 Backlog Task"
+description: "ভবিষ্যতের জন্য টাস্ক যোগ করুন"
+title: "### Backlog] "
+labels: ["Backlog"]
+body:
+  - type: textarea
+    attributes:
+      label: কাজের বিবরণ
+      description: কী করতে হবে লিখুন
+      placeholder: যেমন — Firebase config setup
