@@ -1,0 +1,16 @@
+name: "Backlog"
+description: "ভবিষ্যতের কাজ; আইডিয়া বা অপেক্ষমান টাস্ক"
+labels: ["backlog"]
+body:
+  - type: input
+    id: title
+    attributes:
+      label: "টাস্কের নাম"
+      description: "টাস্কের সংক্ষিপ্ত নাম লিখুন"
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: "বিস্তারিত"
+      description: "কি করতে হবে সেটার বিস্তারিত লিখুন"
