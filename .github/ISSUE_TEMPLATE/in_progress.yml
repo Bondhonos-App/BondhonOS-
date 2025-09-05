@@ -1,0 +1,12 @@
+github/ISSUE_TEMPLATE/in_progress.yml
+
+name: "🚧 In Progress Task"
+description: "যে কাজটি এখন চলছে"
+title: "[In Progress] "
+labels: ["In progress"]
+body:
+  - type: textarea
+    attributes:
+      label: কী হচ্ছে
+      description: কাজের অগ্রগতি লিখুন
+      placeholder: যেমন — Login UI ডিজাইন করা হচ্ছে
