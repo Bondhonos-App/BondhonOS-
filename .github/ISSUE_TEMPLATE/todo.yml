@@ -1,0 +1,10 @@
+name: "✅ To Do Task"
+description: "যা অগ্রাধিকার দিয়ে করতে হবে"
+title: "[To Do] "
+labels: ["To Do"]
+body:
+  - type: textarea
+    attributes:
+      label: টাস্ক বিস্তারিত
+      description: কাজের পূর্ণ বিবরণ দিন
+      placeholder: যেমন — Firebase Auth integration শুরু করা
