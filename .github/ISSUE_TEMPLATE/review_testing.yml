@@ -1,0 +1,12 @@
+.github/ISSUE_TEMPLATE/review_testing.yml
+
+name: "🧪 Review / Testing Task"
+description: "যে কাজ শেষ হয়েছে কিন্তু টেস্ট/রিভিউ বাকি"
+title: "[Review / Testing] "
+labels: ["Review / Testing"]
+body:
+  - type: textarea
+    attributes:
+      label: কী রিভিউ করতে হবে
+      description: টেস্ট বা রিভিউ সংক্রান্ত তথ্য দিন
+      placeholder: যেমন — Login ফাংশন টেস্ট বাকি
