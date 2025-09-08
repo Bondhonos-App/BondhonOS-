@@ -1,52 +1,145 @@
 const fs = require('fs');
-const yaml = require('js-yaml');
 const chalk = require('chalk');
+const fetch = require('node-fetch');
+const semver = require('semver');
+const { getWorkflows, loadYAML, dumpYAML } = require('./helpers');
+const config = require('./config');
 
-const filePath = './sample-workflow.yml';
+(async () => {
+  try {
+    const files = await getWorkflows(config);
+    const fixedFiles = [];
 
-// Load YAML file
-try {
-  const fileContents = fs.readFileSync(filePath, 'utf8');
-  const workflow = yaml.load(fileContents);
+    for (let file of files) {
+      console.log(chalk.blue(`🔍 Processing ${file.name} ...`));
+      const contentRes = await fetch(file.download_url);
+      const content = await contentRes.text();
+      let workflow = loadYAML(Buffer.from(content, 'utf8'));
+      let fixesApplied = false;
 
-  console.log(chalk.blue("✅ Workflow loaded successfully!"));
+      // --- YAML Fixes ---
+      if (!workflow.name) {
+        workflow.name = 'Auto-Fixed Workflow';
+        fixesApplied = true;
+      }
+      if (!workflow.jobs) {
+        workflow.jobs = { build: { 'runs-on': 'ubuntu-latest', steps: [{ run: 'echo Hello' }] } };
+        fixesApplied = true;
+      }
 
-  // Check for common mistakes
-  let fixesApplied = false;
+      for (let jobKey in workflow.jobs) {
+        let job = workflow.jobs[jobKey];
+        if (!job.steps || job.steps.length === 0) {
+          job.steps = [{ run: 'echo "Step auto-added"' }];
+          fixesApplied = true;
+        }
 
-  // 1. Check if 'name' field exists
-  if (!workflow.name) {
-    workflow.name = 'Auto-Fixed Workflow';
-    console.log(chalk.yellow("⚠ 'name' field missing. Auto-added."));
-    fixesApplied = true;
-  }
+        // --- Node/Python validation ---
+        if (job['strategy'] && job['strategy']['matrix']) {
+          if (job['strategy']['matrix']['node-version'] && !semver.validRange(job['strategy']['matrix']['node-version'])) {
+            job['strategy']['matrix']['node-version'] = '18.x';
+            fixesApplied = true;
+          }
+          if (job['strategy']['matrix']['python-version'] && !semver.validRange(job['strategy']['matrix']['python-version'])) {
+            job['strategy']['matrix']['python-version'] = '3.11';
+            fixesApplied = true;
+          }
+        }
 
-  // 2. Check if jobs exist
-  if (!workflow.jobs) {
-    workflow.jobs = { build: { 'runs-on': 'ubuntu-latest', steps: [{ run: 'echo Hello' }] } };
-    console.log(chalk.yellow("⚠ 'jobs' field missing. Auto-added a default build job."));
-    fixesApplied = true;
-  }
+        if (job['runs-on'] && !['ubuntu-latest','windows-latest','macos-latest'].includes(job['runs-on'])) {
+          job['runs-on'] = 'ubuntu-latest';
+          fixesApplied = true;
+        }
 
-  // 3. Check indentation for steps
-  for (let jobKey in workflow.jobs) {
-    let job = workflow.jobs[jobKey];
-    if (!job.steps || job.steps.length === 0) {
-      job.steps = [{ run: 'echo "Step auto-added"' }];
-      console.log(chalk.yellow(`⚠ No steps found in job '${jobKey}'. Auto-added a default step.`));
-      fixesApplied = true;
+        // --- Secrets/Env validation ---
+        if (job.env) {
+          for (let key in job.env) {
+            if (!job.env[key]) {
+              job.env[key] = 'DUMMY_VALUE';
+              fixesApplied = true;
+            }
+          }
+        }
+
+        if (job.steps) {
+          for (let step of job.steps) {
+            if (step.with) {
+              for (let k in step.with) {
+                if (!step.with[k]) step.with[k] = 'DUMMY_VALUE';
+              }
+            }
+          }
+        }
+
+        // --- Dependency auto-install ---
+        for (let step of job.steps) {
+          if (step.run && step.run.includes('npm install')) {
+            step.run += ' || echo "npm install failed, skipping"';
+          }
+          if (step.run && step.run.includes('pip install')) {
+            step.run += ' || echo "pip install failed, skipping"';
+          }
+        }
+      }
+
+      if (fixesApplied) {
+        fixedFiles.push({
+          path: file.path,
+          content: Buffer.from(dumpYAML(workflow)).toString('base64')
+        });
+        console.log(chalk.green(`✅ ${file.name} fixed.`));
+      } else {
+        console.log(chalk.green(`✅ ${file.name} is fine.`));
+      }
     }
-  }
 
-  // Save fixed workflow if any changes
-  if (fixesApplied) {
-    const fixedYaml = yaml.dump(workflow, { noRefs: true });
-    fs.writeFileSync('./sample-workflow-fixed.yml', fixedYaml, 'utf8');
-    console.log(chalk.green("✅ Fixed workflow saved as 'sample-workflow-fixed.yml'"));
-  } else {
-    console.log(chalk.green("✅ No issues found. Workflow is fine."));
-  }
+    if (fixedFiles.length === 0) {
+      console.log(chalk.blue("✅ No workflow files needed fixing."));
+      return;
+    }
 
-} catch (e) {
-  console.log(chalk.red("❌ Error loading workflow file:"), e);
-}
+    // --- Branch Creation ---
+    const branchName = `full-auto-fix-${Date.now()}`;
+    const refRes = await fetch(`https://api.github.com/repos/${config.owner}/${config.repo}/git/refs/heads/${config.branch}`, {
+      headers: { Authorization: `token ${config.githubToken}` }
+    });
+    const baseData = await refRes.json();
+    await fetch(`https://api.github.com/repos/${config.owner}/${config.repo}/git/refs`, {
+      method: 'POST',
+      headers: { Authorization: `token ${config.githubToken}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ref: `refs/heads/${branchName}`, sha: baseData.object.sha })
+    });
+    console.log(chalk.green(`✅ Branch '${branchName}' created.`));
+
+    // --- Commit fixed files ---
+    for (let f of fixedFiles) {
+      await fetch(`https://api.github.com/repos/${config.owner}/${config.repo}/contents/${f.path}`, {
+        method: 'PUT',
+        headers: { Authorization: `token ${config.githubToken}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: `Full auto-fixed workflow: ${f.path}`,
+          content: f.content,
+          branch: branchName
+        })
+      });
+      console.log(chalk.green(`✅ ${f.path} committed to ${branchName}`));
+    }
+
+    // --- Create PR ---
+    const prRes = await fetch(`https://api.github.com/repos/${config.owner}/${config.repo}/pulls`, {
+      method: 'POST',
+      headers: { Authorization: `token ${config.githubToken}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title: config.prTitle,
+        head: branchName,
+        base: config.branch,
+        body: config.prBody
+      })
+    });
+    const prData = await prRes.json();
+    console.log(chalk.green(`✅ Pull Request created: ${prData.html_url}`));
+
+  } catch (e) {
+    console.log(chalk.red("❌ Error:"), e);
+  }
+})();
