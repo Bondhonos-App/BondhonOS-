@@ -1,0 +1,45 @@
+.referral-container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 30px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.referral-container h1 {
+    color: #1E90FF;
+    margin-bottom: 10px;
+}
+
+.referral-container p {
+    margin-bottom: 20px;
+}
+
+.referral-container input {
+    width: 80%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    text-align: center;
+}
+
+.referral-container button {
+    margin: 5px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background: #1E90FF;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#statusMessage {
+    margin-top: 15px;
+    color: green;
+    font-weight: bold;
+}
