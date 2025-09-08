@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --glass: rgba(255,255,255,0.4);
+  --glass-dark: rgba(15,23,42,0.5);
+}
+
+.glass {
+  @apply rounded-3xl border border-white/30 shadow-glass;
+  background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.25));
+  backdrop-filter: blur(12px);
+}
+.dark .glass {
+  background: linear-gradient(180deg, rgba(30,41,59,0.7), rgba(15,23,42,0.5));
+  border-color: rgba(148,163,184,0.25);
+}
+
+.neon-ring {
+  box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.25), inset 0 0 24px rgba(155, 92, 255, 0.25);
+}
+
+.card-hover {
+  @apply transition-transform ease-out duration-200 hover:-translate-y-0.5;
+}
