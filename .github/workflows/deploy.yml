@@ -1,1 +1,43 @@
+name: BondhonOS Secure Deploy
 
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    env:
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      LICENSE_PRIVATE_KEY: ${{ secrets.LICENSE_PRIVATE_KEY }}
+      STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+      DB_URL: ${{ secrets.DB_URL }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+
+    - name: Install dependencies
+      run: |
+        cd services/auth-service && npm install
+        cd services/payment-service && npm install
+        cd apps/web && npm install
+
+    - name: Build Web App
+      run: |
+        cd apps/web && npm run build
+
+    - name: Deploy Services
+      run: |
+        scp -r services/auth-service user@server:/var/www/auth-service
+        scp -r services/payment-service user@server:/var/www/payment-service
+
+    - name: Deploy Web App
+      run: |
+        rsync -avz apps/web/build/ user@server:/var/www/html/
