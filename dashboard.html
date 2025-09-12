@@ -40,8 +40,8 @@
 
   <script type="module">
     import { auth, db } from "./firebase-config.js";
-    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
-    import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+    import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
     const logoutBtn = document.getElementById("logoutBtn");
     const userEmail = document.getElementById("userEmail");
@@ -51,7 +51,6 @@
 
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
-        // Not logged in → redirect to login
         window.location.href = "login.html";
         return;
       }
@@ -75,8 +74,4 @@
 
     logoutBtn.addEventListener("click", async () => {
       await signOut(auth);
-      window.location.href = "login.html";
-    });
-  </script>
-</body>
-</html>
+      window.location.href = "login.html
